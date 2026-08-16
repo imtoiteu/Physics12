@@ -380,7 +380,7 @@ def f09_do_nhiet_dung_rieng():
     ax.add_patch(Rectangle((1.0, 0.0), 3.0, 2.4, fill=False, ec="k", lw=2.2))
     ax.add_patch(Rectangle((1.1, 0.1), 2.8, 1.75, fc="#aed6f1", ec="none"))
     ax.add_patch(Rectangle((0.82, 2.4), 3.36, 0.22, fc="#d5dbdb", ec="k", lw=1.4))
-    ax.text(2.5, 0.75, "nước\n$m$, $c$", ha="center", fontsize=10, color=BLUE)
+    ax.text(1.45, 0.62, "nước\n$m$, $c$", ha="center", fontsize=10, color=BLUE)
     # vỏ cách nhiệt
     ax.add_patch(Rectangle((0.7, -0.3), 3.6, 3.0, fill=False, ec=ORANGE, lw=1.6, ls="--"))
     ax.text(0.60, 1.2, "vỏ cách nhiệt", rotation=90, ha="right", va="center",
@@ -390,9 +390,7 @@ def f09_do_nhiet_dung_rieng():
     ax.plot([2.25, 2.25], [2.62, 1.35], color="k", lw=1.6)
     zz = np.linspace(0, 1, 60)
     ax.plot(1.75 + 0.5 * zz, 1.35 - 0.10 * np.sin(zz * 8 * np.pi), color=RED, lw=2.2)
-    ax.annotate("điện trở nung", xy=(2.0, 1.32), xytext=(0.05, 0.60),
-                fontsize=9.2, color=RED, ha="center",
-                arrowprops=dict(arrowstyle="->", color=RED, lw=1.0))
+    ax.text(2.45, 1.30, "điện trở", fontsize=9.2, color=RED, va="center")
     # nhiệt kế
     ax.plot([3.35, 3.35], [2.95, 0.55], color=GREEN, lw=2.2)
     ax.add_patch(Circle((3.35, 0.45), 0.13, fc=GREEN, ec=GREEN))
@@ -455,12 +453,16 @@ def f11_do_nhiet_nong_chay():
         x = rng.uniform(1.05, 3.05); y = rng.uniform(0.15, 1.55)
         ax.add_patch(Rectangle((x, y), 0.26, 0.20, fc="#d6eaf8", ec=BLUE, lw=0.9,
                                angle=rng.uniform(-25, 25)))
-    ax.text(2.1, 2.05, "nước đá đang tan  $0$ °C", ha="center", fontsize=9.4, color=BLUE)
+    ax.annotate("nước đá đang tan,\nnhiệt độ giữ $0$ °C", xy=(1.25, 1.35),
+                xytext=(-1.05, 2.30), fontsize=9.2, color=BLUE, ha="center",
+                arrowprops=dict(arrowstyle="->", color=BLUE, lw=1.0))
     zz = np.linspace(0, 1, 60)
     ax.plot(1.35 + 1.4 * zz, 0.85 - 0.10 * np.sin(zz * 10 * np.pi), color=RED, lw=2.0)
     ax.plot([1.35, 1.35], [0.85, 2.85], color="k", lw=1.4)
     ax.plot([2.75, 2.75], [0.85, 2.85], color="k", lw=1.4)
-    ax.text(3.60, 0.85, "điện trở nung\ncông suất $P$", fontsize=9.2, color=RED, va="center")
+    ax.annotate("điện trở nung\ncông suất $P$", xy=(2.35, 0.83), xytext=(4.15, 1.95),
+                fontsize=9.2, color=RED, ha="center",
+                arrowprops=dict(arrowstyle="->", color=RED, lw=1.0))
     # phễu và cốc hứng nước
     ax.plot([1.9, 2.1, 2.1, 2.3], [0.0, -0.55, -0.55, 0.0], color=GREY, lw=1.6)
     ax.add_patch(Rectangle((1.55, -1.85), 1.3, 1.15, fill=False, ec="k", lw=1.8))
