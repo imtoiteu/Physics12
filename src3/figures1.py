@@ -208,12 +208,12 @@ def f04_do_thi_dun_nuoc_da():
     ax.annotate("", xy=(1.0, -22), xytext=(6.35, -22),
                 arrowprops=dict(arrowstyle="<->", color=GREEN, lw=1.3))
     ax.text(3.7, -27, "$Q_2 = \\lambda m$", ha="center", va="top", fontsize=9.6, color=GREEN)
-    ax.annotate("", xy=(16.35, 92), xytext=(84.2, 92),
+    ax.annotate("", xy=(16.35, 93), xytext=(84.2, 93),
                 arrowprops=dict(arrowstyle="<->", color=GREEN, lw=1.3))
-    ax.text(50.0, 86.5, "$Q_4 = Lm$  —  dài hơn hẳn giai đoạn ② vì $L \\gg \\lambda$",
+    ax.text(50.0, 88.5, "$Q_4 = Lm$  —  dài hơn hẳn giai đoạn ② vì $L \\gg \\lambda$",
             ha="center", va="top", fontsize=9.6, color=GREEN)
 
-    ax.text(20, 137, "① Nước đá nóng lên:  $Q_1 = m c_{đá}\\,\\Delta t$\n"
+    ax.text(21, 74, "① Nước đá nóng lên:  $Q_1 = m c_{đá}\\,\\Delta t$\n"
                      "② Nóng chảy ở $0$ °C, nhiệt độ KHÔNG đổi:  $Q_2 = \\lambda m$\n"
                      "③ Nước lỏng nóng lên:  $Q_3 = m c_{nước}\\,\\Delta t$\n"
                      "④ Sôi ở $100$ °C, nhiệt độ KHÔNG đổi:  $Q_4 = Lm$\n"
@@ -460,7 +460,7 @@ def f11_do_nhiet_nong_chay():
     ax.plot(1.35 + 1.4 * zz, 0.85 - 0.10 * np.sin(zz * 10 * np.pi), color=RED, lw=2.0)
     ax.plot([1.35, 1.35], [0.85, 2.85], color="k", lw=1.4)
     ax.plot([2.75, 2.75], [0.85, 2.85], color="k", lw=1.4)
-    ax.annotate("điện trở nung\ncông suất $P$", xy=(2.35, 0.83), xytext=(4.15, 1.95),
+    ax.annotate("điện trở nung\ncông suất $P$", xy=(2.55, 0.80), xytext=(5.30, 3.45),
                 fontsize=9.2, color=RED, ha="center",
                 arrowprops=dict(arrowstyle="->", color=RED, lw=1.0))
     # phễu và cốc hứng nước
@@ -475,13 +475,14 @@ def f11_do_nhiet_nong_chay():
     ax.plot([1.35, 1.35], [2.85, 3.10], color="k", lw=1.3)
     ax.plot([2.75, 2.75], [2.85, 3.10], color="k", lw=1.3)
 
-    ax.text(6.4, 1.1, "Trong thời gian $t$:\n\n"
+    ax.text(7.6, 1.1, "Trong thời gian $t$:\n\n"
                       "$Q = P\\,t = \\lambda\\,m$\n\n"
                       "$\\Rightarrow\\;\\; \\lambda = \\dfrac{P\\,t}{m}$\n\n"
-                      "Lưu ý: nhiệt độ giữ nguyên\n$0$ °C suốt quá trình đo.",
-            ha="center", va="center", fontsize=10.2, color=RED,
+                      "Nhiệt độ KHÔNG đổi suốt\nquá trình đo → toàn bộ nhiệt\n"
+                      "lượng dùng để làm nóng chảy.",
+            ha="center", va="center", fontsize=10.0, color=RED,
             bbox=dict(fc="#fdf2f0", ec=RED, lw=1.2, boxstyle="round,pad=0.45"))
-    clean(ax, -0.3, 8.6, -2.5, 4.1, eq=False)
+    clean(ax, -2.2, 10.2, -2.5, 4.1, eq=False)
     save(fig, "h11_do_nhiet_nong_chay")
 
 
@@ -620,9 +621,11 @@ def f16_mo_hinh_dong_hoc():
     xm, ym = 5.05, 2.5
     ax.add_patch(Circle((xm, ym), 0.14, fc=RED, ec="k", lw=0.9, zorder=6))
     arrow(ax, 4.15, 2.5, 5.85, 2.5, color=RED, lw=2.0, ms=13)
-    ax.text(4.55, 2.68, "$+mv$", fontsize=10.5, color=RED)
+    ax.text(4.55, 2.72, "$+mv$", fontsize=10.5, color=RED,
+            bbox=dict(fc="white", ec="none", pad=1.2), zorder=8)
     arrow(ax, 5.85, 1.95, 4.15, 1.95, color=GREEN, lw=2.0, ms=13)
-    ax.text(4.55, 1.60, "$-mv$", fontsize=10.5, color=GREEN)
+    ax.text(4.55, 1.55, "$-mv$", fontsize=10.5, color=GREEN,
+            bbox=dict(fc="white", ec="none", pad=1.2), zorder=8)
     ax.text(6.25, 2.25, "Mỗi va chạm truyền cho thành bình\n"
                         "xung lượng $2mv$ → tổng hợp vô số\n"
                         "va chạm tạo thành ÁP SUẤT",
@@ -648,22 +651,23 @@ def f17_thi_nghiem_boyle():
     ax.text(1.2, 5.10, "nén / kéo pit-tông", ha="center", fontsize=9.4, color=RED)
     ax.text(1.2, 1.3, "khí\n$V$", ha="center", fontsize=10.5, color=BLUE)
     # thước đo thể tích
-    ax.plot([2.05, 2.05], [0.46, 2.26], color=GREEN, lw=1.6)
+    ax.plot([2.02, 2.02], [0.46, 2.26], color=GREEN, lw=1.6)
     for y in np.linspace(0.46, 2.26, 7):
-        ax.plot([2.05, 2.22], [y, y], color=GREEN, lw=1.0)
-    ax.text(2.35, 1.36, "thang chia\nthể tích", fontsize=9.2, color=GREEN, va="center")
-    # áp kế
-    ax.add_patch(Circle((4.6, 1.6), 0.85, fc="#f7f7f7", ec="k", lw=1.8))
+        ax.plot([2.02, 2.18], [y, y], color=GREEN, lw=1.0)
+    ax.text(2.26, 2.30, "thang chia\nthể tích", fontsize=9.2, color=GREEN, va="bottom")
+    # áp kế (dùng ellipse để bù tỉ lệ trục vì aspect không bằng nhau)
+    cx, cy, rx, ry = 4.7, 1.5, 0.72, 0.90
+    ax.add_patch(Ellipse((cx, cy), 2 * rx, 2 * ry, fc="#f7f7f7", ec="k", lw=1.8))
     for a in np.linspace(200, -20, 9):
         ra = np.radians(a)
-        ax.plot([4.6 + 0.68 * np.cos(ra), 4.6 + 0.82 * np.cos(ra)],
-                [1.6 + 0.68 * np.sin(ra), 1.6 + 0.82 * np.sin(ra)], color="k", lw=1.0)
-    arrow(ax, 4.6, 1.6, 4.6 + 0.55 * np.cos(np.radians(62)),
-          1.6 + 0.55 * np.sin(np.radians(62)), color=RED, lw=2.0, ms=10)
-    ax.text(4.6, 0.42, "ÁP KẾ – đọc $p$", ha="center", fontsize=9.4, fontweight="bold")
-    ax.plot([1.8, 3.0, 3.0, 3.75], [1.0, 1.0, 1.6, 1.6], color="k", lw=1.5)
+        ax.plot([cx + 0.80 * rx * np.cos(ra), cx + 0.94 * rx * np.cos(ra)],
+                [cy + 0.80 * ry * np.sin(ra), cy + 0.94 * ry * np.sin(ra)], color="k", lw=1.0)
+    arrow(ax, cx, cy, cx + 0.6 * rx * np.cos(np.radians(62)),
+          cy + 0.6 * ry * np.sin(np.radians(62)), color=RED, lw=2.0, ms=10)
+    ax.text(cx, 0.18, "ÁP KẾ – đọc $p$", ha="center", fontsize=9.4, fontweight="bold")
+    ax.plot([1.8, 3.2, 3.2, 3.98], [0.70, 0.70, 1.50, 1.50], color="k", lw=1.5)
 
-    ax.text(3.4, -0.75, "Giữ NHIỆT ĐỘ và LƯỢNG KHÍ không đổi, thay đổi $V$ chậm, đọc $p$ tương ứng\n"
+    ax.text(2.9, -0.60, "Giữ NHIỆT ĐỘ và LƯỢNG KHÍ không đổi, thay đổi $V$ chậm, đọc $p$ tương ứng\n"
                         "→ kiểm tra tích $pV$ = hằng số",
             ha="center", va="top", fontsize=9.8, color=RED,
             bbox=dict(fc="#fdf2f0", ec=RED, lw=1.0, boxstyle="round,pad=0.35"))
@@ -717,8 +721,9 @@ def f19_thi_nghiem_charles():
     ax.add_patch(Rectangle((1.85, 0.35), 0.55, 3.4, fill=False, ec="k", lw=1.8))
     ax.add_patch(Rectangle((1.89, 0.39), 0.47, 1.6, fc="#fdebd0", ec="none"))
     ax.add_patch(Rectangle((1.89, 1.99), 0.47, 0.18, fc="#7f8c8d", ec="k", lw=0.8))
-    ax.text(2.55, 2.08, "giọt thuỷ ngân (di chuyển tự do\n→ giữ áp suất khí KHÔNG đổi)",
-            fontsize=9.2, va="center")
+    ax.annotate("giọt thuỷ ngân di chuyển tự do\n→ áp suất khí KHÔNG đổi",
+                xy=(2.42, 2.08), xytext=(4.05, 3.75), fontsize=9.2, ha="center",
+                arrowprops=dict(arrowstyle="->", color="k", lw=1.0))
     ax.text(2.12, 1.15, "khí", ha="center", fontsize=10, color=ORANGE, rotation=90)
     arrow(ax, 2.12, 2.35, 2.12, 3.2, color=RED, lw=1.8, ms=12)
     ax.text(1.72, 2.85, "$V$ tăng", fontsize=9.4, color=RED, ha="right")
@@ -842,28 +847,30 @@ def f21_ba_dang_qua_trinh():
 def f22_chu_trinh_pV():
     """Chu trình ba giai đoạn trên giản đồ p-V (bài toán chuyển hệ toạ độ)."""
     fig, ax = plt.subplots(figsize=(6.2, 4.2))
-    # 1(1atm,2L,300K) -> 2 đẳng tích tăng p -> 3 đẳng áp -> về 1 theo đẳng nhiệt
-    p1, V1 = 1.0, 2.0
-    p2, V2 = 2.0, 2.0
-    p3, V3 = 2.0, 3.0
+    # Chu trình khép kín nhất quán: pV tại (1) và (3) bằng nhau nên (3)->(1) đẳng nhiệt được.
+    # (1) 2 L, 3 atm  --đẳng tích-->  (2) 2 L, 1 atm  --đẳng áp-->  (3) 6 L, 1 atm  --đẳng nhiệt--> (1)
+    p1, V1 = 3.0, 2.0
+    p2, V2 = 1.0, 2.0
+    p3, V3 = 1.0, 6.0
     ax.plot([V1, V2], [p1, p2], color=BLUE, lw=2.4)
     ax.plot([V2, V3], [p2, p3], color=GREEN, lw=2.4)
-    Vh = np.linspace(V1, V3, 120)
-    ax.plot(Vh, p3 * V3 / Vh, color=RED, lw=2.4)
-    for (V, p, lb, dx, dy) in [(V1, p1, "(1)", -0.20, -0.16), (V2, p2, "(2)", -0.22, 0.10),
-                               (V3, p3, "(3)", 0.10, 0.10)]:
+    Vh = np.linspace(V1, V3, 200)
+    ax.plot(Vh, p1 * V1 / Vh, color=RED, lw=2.4)
+    for (V, p, lb, dx, dy) in [(V1, p1, "(1)", -0.30, 0.10), (V2, p2, "(2)", -0.32, -0.22),
+                               (V3, p3, "(3)", 0.14, -0.02)]:
         ax.plot([V], [p], "o", color="k", ms=7, zorder=6)
         ax.text(V + dx, p + dy, lb, fontsize=11.5, fontweight="bold")
-    arrow(ax, V1, 1.45, V1, 1.62, color=BLUE, lw=1.6, ms=13)
-    arrow(ax, 2.45, p2, 2.62, p2, color=GREEN, lw=1.6, ms=13)
-    arrow(ax, 2.55, p3 * V3 / 2.55, 2.40, p3 * V3 / 2.40, color=RED, lw=1.6, ms=13)
-    ax.text(1.62, 1.5, "(1)→(2)\nĐẲNG TÍCH", fontsize=9.2, color=BLUE, ha="right")
-    ax.text(2.5, 2.12, "(2)→(3) ĐẲNG ÁP", fontsize=9.2, color=GREEN, ha="center")
-    ax.text(2.75, 2.55, "(3)→(1)\nĐẲNG NHIỆT", fontsize=9.2, color=RED, ha="center")
+    arrow(ax, V1, 2.30, V1, 1.55, color=BLUE, lw=1.6, ms=13)
+    arrow(ax, 3.9, p2, 4.6, p2, color=GREEN, lw=1.6, ms=13)
+    arrow(ax, 3.4, p1 * V1 / 3.4, 3.0, p1 * V1 / 3.0, color=RED, lw=1.6, ms=13)
+    ax.text(1.85, 1.95, "(1)→(2)\nĐẲNG TÍCH", fontsize=9.2, color=BLUE, ha="right")
+    ax.text(4.25, 0.80, "(2)→(3) ĐẲNG ÁP", fontsize=9.2, color=GREEN, ha="center", va="top")
+    ax.text(4.55, 1.75, "(3)→(1) ĐẲNG NHIỆT\n($pV$ tại (1) và (3) đều bằng 6)",
+            fontsize=9.2, color=RED, ha="center")
     ax.set_xlabel("$V$ (L)", fontsize=11); ax.set_ylabel("$p$ (atm)", fontsize=11)
-    ax.set_xlim(1.5, 3.5); ax.set_ylim(0.6, 2.9)
-    ax.set_xticks([1.5, 2.0, 2.5, 3.0, 3.5])
-    ax.set_yticks([1.0, 1.5, 2.0, 2.5])
+    ax.set_xlim(0, 7.6); ax.set_ylim(0, 3.8)
+    ax.set_xticks([0, 1, 2, 3, 4, 5, 6, 7])
+    ax.set_yticks([0, 1, 2, 3])
     ax.grid(alpha=0.25, ls=":")
     ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
     save(fig, "h22_chu_trinh_pV")
@@ -911,7 +918,7 @@ def f24_ong_chu_U():
             ax.text(0.45, 1.35, "khí\n$\\ell_1$", ha="center", fontsize=10.5, color=ORANGE)
             ax.text(1.15, 3.25, "thuỷ ngân\ncột $h$", fontsize=9.6, va="center")
             ax.text(0.45, 6.35, "miệng MỞ ▲", ha="center", fontsize=9.8, color=RED)
-            ax.text(0.45, -0.95, "$p_{khí} = p_0 + h$", ha="center", fontsize=11.5,
+            ax.text(0.45, -1.25, "$p_{khí} = p_0 + h$", ha="center", fontsize=11.5,
                     color=RED, fontweight="bold")
             ax.set_title("Ống thẳng đứng, MIỆNG Ở TRÊN", fontsize=10.3, pad=8)
         else:
@@ -922,7 +929,7 @@ def f24_ong_chu_U():
             ax.text(0.45, 4.65, "khí\n$\\ell_2$", ha="center", fontsize=10.5, color=ORANGE)
             ax.text(1.15, 2.75, "thuỷ ngân\ncột $h$", fontsize=9.6, va="center")
             ax.text(0.45, -0.55, "miệng MỞ ▼", ha="center", fontsize=9.8, color=RED)
-            ax.text(0.45, -1.35, "$p_{khí} = p_0 - h$", ha="center", fontsize=11.5,
+            ax.text(0.45, -1.25, "$p_{khí} = p_0 - h$", ha="center", fontsize=11.5,
                     color=RED, fontweight="bold")
             ax.set_title("Ống thẳng đứng, MIỆNG Ở DƯỚI", fontsize=10.3, pad=8)
         clean(ax, -0.6, 3.4, -2.2, 7.0, eq=False)
@@ -1022,10 +1029,11 @@ def f27_pit_tong_hai_ngan():
 def f28_do_thi_pV_doc_hieu():
     """Đồ thị p-V có bốn điểm trạng thái - dùng cho bài đọc hiểu đồ thị."""
     fig, ax = plt.subplots(figsize=(6.2, 4.2))
-    pts = {"A": (2.0, 3.0), "B": (6.0, 1.0), "C": (6.0, 3.0), "D": (2.0, 1.0)}
+    # Dùng nhãn M, N, P, Q thay cho A, B, C, D để không trùng với chữ cái phương án
+    pts = {"M": (2.0, 3.0), "N": (6.0, 1.0), "P": (6.0, 3.0), "Q": (2.0, 1.0)}
     V = np.linspace(1.4, 7.0, 200)
     ax.plot(V, 6.0 / V, color=GREY, lw=1.4, ls="--")
-    ax.text(6.2, 1.15, "đường đẳng nhiệt qua A và B", fontsize=8.8, color=GREY, ha="left")
+    ax.text(6.2, 1.15, "đường đẳng nhiệt qua M và N", fontsize=8.8, color=GREY, ha="left")
     for k, (x, y) in pts.items():
         ax.plot([x], [y], "o", color=RED, ms=8, zorder=6)
         ax.text(x + 0.18, y + 0.12, k, fontsize=13, fontweight="bold", color=RED)
