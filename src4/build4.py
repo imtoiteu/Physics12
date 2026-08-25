@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Sinh 20 tệp Word: 10 đề kiểm tra theo chương + 10 tệp lời giải chi tiết.
+"""Sinh 40 tệp Word: 20 đề kiểm tra theo chương + 20 tệp lời giải chi tiết.
+
+Bốn chương: I – Vật lí nhiệt, II – Khí lí tưởng, III – Từ trường,
+IV – Vật lí hạt nhân; mỗi chương 5 đề có độ khó tăng dần.
 
 Mỗi đề mô phỏng đúng cấu trúc đề thi tốt nghiệp THPT môn Vật lí hiện hành
 (Quyết định 764/QĐ-BGDĐT ngày 08/3/2024, áp dụng từ năm 2025 và giữ ổn định
@@ -28,6 +31,8 @@ sys.path.insert(0, HERE)
 
 import de_ch1
 import de_ch2
+import de_ch3
+import de_ch4
 
 LETTERS = ["A", "B", "C", "D"]
 DS_LABELS = ["a)", "b)", "c)", "d)"]
@@ -509,7 +514,8 @@ def main():
     made = []
     counts = {L: 0 for L in LETTERS}
     for chuong, (tests, hangso) in enumerate(
-            [(de_ch1.DE_CH1, de_ch1.HANG_SO), (de_ch2.DE_CH2, de_ch2.HANG_SO)], 1):
+            [(de_ch1.DE_CH1, de_ch1.HANG_SO), (de_ch2.DE_CH2, de_ch2.HANG_SO),
+             (de_ch3.DE_CH3, de_ch3.HANG_SO), (de_ch4.DE_CH4, de_ch4.HANG_SO)], 1):
         for k, test in enumerate(tests):
             balance_test(test, seed=1000 * chuong + k, offset=(chuong - 1) * 5 + k)
             thin_figures(test)
@@ -523,7 +529,7 @@ def main():
             print("  ✓ %-26s  %2d + %d + %d câu"
                   % (base, len(test["p1"]), len(test["p2"]), len(test["p3"])))
     print("\nĐã tạo %d tệp .docx trong thư mục %s" % (len(made), os.path.basename(OUTDIR)))
-    print("Phân bố đáp án Phần I trên toàn bộ 10 đề:", counts)
+    print("Phân bố đáp án Phần I trên toàn bộ các đề:", counts)
     return made
 
 

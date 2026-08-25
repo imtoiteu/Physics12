@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Kiểm tra cấu trúc, tính nhất quán và chất lượng hình thức của 20 tệp .docx.
+"""Kiểm tra cấu trúc, tính nhất quán và chất lượng hình thức của 40 tệp .docx.
 
 Chạy sau build4.py. Báo LỖI cho những vấn đề bắt buộc phải sửa và CẢNH BÁO cho
 những điểm cần rà lại bằng mắt.
@@ -20,15 +20,19 @@ sys.path.insert(0, HERE)
 from docx import Document
 import de_ch1
 import de_ch2
+import de_ch3
+import de_ch4
 import build4
 
 ERR, WARN = [], []
 LETTERS = ["A", "B", "C", "D"]
-ALL_TESTS = [(1, t) for t in de_ch1.DE_CH1] + [(2, t) for t in de_ch2.DE_CH2]
+ALL_TESTS = ([(1, t) for t in de_ch1.DE_CH1] + [(2, t) for t in de_ch2.DE_CH2]
+             + [(3, t) for t in de_ch3.DE_CH3] + [(4, t) for t in de_ch4.DE_CH4])
 
 # Áp dụng đúng phép cân bằng vị trí đáp án mà build4 đã dùng, để kiểm tra trên
 # chính dữ liệu đã được xuất ra tệp .docx.
-for _ch, _tests in ((1, de_ch1.DE_CH1), (2, de_ch2.DE_CH2)):
+for _ch, _tests in ((1, de_ch1.DE_CH1), (2, de_ch2.DE_CH2),
+                    (3, de_ch3.DE_CH3), (4, de_ch4.DE_CH4)):
     for _k, _t in enumerate(_tests):
         build4.balance_test(_t, seed=1000 * _ch + _k, offset=(_ch - 1) * 5 + _k)
         build4.thin_figures(_t)
@@ -46,6 +50,12 @@ def warn(m):
     WARN.append(m)
 
 
+def norm(s):
+    """Bỏ dấu gạch dưới: trong tệp Word, kí hiệu m_D được in thành m với chỉ số
+    dưới D nên dấu gạch dưới không còn trong văn bản trích ra."""
+    return s.replace("_", "")
+
+
 def docx_text(path):
     doc = Document(path)
     parts = [p.text for p in doc.paragraphs]
@@ -53,7 +63,7 @@ def docx_text(path):
         for row in t.rows:
             for c in row.cells:
                 parts.extend(p.text for p in c.paragraphs)
-    return "\n".join(parts)
+    return norm("\n".join(parts))
 
 
 def n_images(path):
@@ -142,9 +152,20 @@ for ch, t in ALL_TESTS:
     for i, it in enumerate(t["p3"], 1):
         stems.append(("%s P3.%d" % (t["code"], i), it["q"]))
 ndup = 0
+_sm = difflib.SequenceMatcher()
 for a in range(len(stems)):
+    _sm.set_seq2(stems[a][1])
+    la = len(stems[a][1])
     for b in range(a + 1, len(stems)):
-        r = difflib.SequenceMatcher(None, stems[a][1], stems[b][1]).ratio()
+        lb = len(stems[b][1])
+        # lọc nhanh: hai chuỗi lệch nhau quá nhiều về độ dài thì tỉ lệ giống
+        # nhau không thể vượt ngưỡng, khỏi cần chạy thuật toán đắt tiền
+        if 2.0 * min(la, lb) / (la + lb) <= 0.88:
+            continue
+        _sm.set_seq1(stems[b][1])
+        if _sm.real_quick_ratio() <= 0.88 or _sm.quick_ratio() <= 0.88:
+            continue
+        r = _sm.ratio()
         if r > 0.88:
             warn("trùng %.2f: %s  ↔  %s" % (r, stems[a][0], stems[b][0]))
             ndup += 1
@@ -183,7 +204,7 @@ for ch, t in ALL_TESTS:
     if max(c.values()) > 7:
         warn("%s: có %d câu cùng đáp án %s"
              % (t["code"], max(c.values()), c.most_common(1)[0][0]))
-print("   toàn bộ 10 đề:", dict(sorted(allc.items())))
+print("   toàn bộ %d đề:" % len(ALL_TESTS), dict(sorted(allc.items())))
 
 # ------------------------------------------------------------------- 6. hình vẽ
 print("6) HÌNH VẼ")
@@ -191,7 +212,7 @@ for name in sorted(used_figs):
     if not os.path.exists(os.path.join(FIGS, name + ".png")):
         err("thiếu tệp hình %s.png" % name)
 drawn = {f[:-4] for f in os.listdir(FIGS) if f.startswith("t") and f.endswith(".png")
-         and re.match(r"^t[12][1-5][a-d]\.png$", f)}
+         and re.match(r"^t[1-4][1-5][a-d]\.png$", f)}
 print("   số hình đã vẽ cho bộ đề: %d  |  số hình được dùng: %d"
       % (len(drawn), len(used_figs)))
 for name in sorted(drawn - used_figs):
@@ -205,8 +226,8 @@ else:
     files = sorted(os.listdir(OUTDIR))
     exams = [f for f in files if f.endswith(".docx") and "_Loi_giai" not in f]
     sols = [f for f in files if f.endswith("_Loi_giai.docx")]
-    if len(exams) != 10 or len(sols) != 10:
-        err("có %d đề và %d lời giải (phải là 10 và 10)" % (len(exams), len(sols)))
+    if len(exams) != 20 or len(sols) != 20:
+        err("có %d đề và %d lời giải (phải là 20 và 20)" % (len(exams), len(sols)))
     for e in exams:
         if e.replace(".docx", "_Loi_giai.docx") not in sols:
             err("đề %s không có tệp lời giải tương ứng" % e)
@@ -231,22 +252,22 @@ else:
         # 7c. đồng bộ nội dung câu hỏi giữa đề và lời giải
         miss = 0
         for it in t["p1"]:
-            probe = it["q"][:55]
+            probe = norm(it["q"][:55])
             if probe not in te:
                 err("%s: đề thiếu câu “%s…”" % (base, probe[:35])); miss += 1
             if probe not in ts:
                 err("%s: lời giải thiếu câu “%s…”" % (base, probe[:35])); miss += 1
         for it in t["p2"]:
-            probe = it["stem"][:55]
+            probe = norm(it["stem"][:55])
             if probe not in te or probe not in ts:
                 err("%s: lệch phần II “%s…”" % (base, probe[:35])); miss += 1
         for it in t["p3"]:
-            probe = it["q"][:55]
+            probe = norm(it["q"][:55])
             if probe not in te or probe not in ts:
                 err("%s: lệch phần III “%s…”" % (base, probe[:35])); miss += 1
         # 7d. lời giải phải có đủ đáp án
         for it in t["p3"]:
-            if it["ans"] not in ts:
+            if norm(it["ans"]) not in ts:
                 err("%s: lời giải thiếu đáp án “%s”" % (base, it["ans"]))
         # 7e. số hình nhúng
         nfig = len({it.get("fig") for lst in (t["p1"], t["p2"], t["p3"])
